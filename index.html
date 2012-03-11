@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+  <head>
+    <title>3 point estimation</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="libs/jquery-1.6.1.min.js"></script>
+    <script src="libs/ember-0.9.5.js"></script>
+    <script src="app.js"></script>
+    <script type="text/x-handlebars" data-template-name="main-view">
+      <table>
+        <tr>
+          <td>Description</td>
+          <td>Best case</td>
+          <td>Likely</td>
+          <td>Worst case</td>
+          <td>Subestimate</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><input id="description" placeholder="New Task" /></td>
+          <td><input id="best" value="1" size="5" /></td>
+          <td><input id="likely" value="2" size="5" /></td>
+          <td><input id="worst" value="3" size="5" /></td>
+          <td></td>
+          <td><a href="#" {{action "add"}}>Add</a></td>
+        </tr>
+        {{#each App.tasks}}
+          {{#view App.TaskView taskBinding="this"}}
+            <td>{{task.description}}</td>
+            <td>{{task.best}}</td>
+            <td>{{task.likely}}</td>
+            <td>{{task.worst}}</td>
+            <td>{{fixed task.estimate}}</td>
+            <td><a href="#" {{action remove}}>Remove</a></td>
+          {{/view}}
+        {{/each}}
+        {{#if App.tasks.length}}
+          <tr>
+            <td><strong>Total</strong></td>
+            <td>{{App.tasks.best}}</td>
+            <td>{{App.tasks.likely}}</td>
+            <td>{{App.tasks.worst}}</td>
+            <td>{{#bind App.tasks.estimate}}{{fixed this}}{{/bind}}</td>
+            <td></td>
+          </tr>
+        {{/if}}
+      </table>
+      {{#if App.tasks.length}}
+      <table>
+        {{#each App.estimates}}
+          <tr>
+            <td>With {{certainty}}% certainty:</td>
+            <td>{{#bind estimate}}{{fixed this}}{{/bind}}</td>
+          <tr>
+        {{/each}}
+      </table>
+      {{/if}}
+    </script>
+  </head>
+  <body>
+    <div id="header">
+      <h1>Madses 3 point estimation</h1>
+    </div>
+    <div id="content" />
+  </body>
+</html>

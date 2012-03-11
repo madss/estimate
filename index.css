@@ -1,0 +1,35 @@
+html, body {
+  font-family: sans-serif;
+}
+
+#app {
+  font-size: 24px;
+  padding: 6px;
+}
+
+td {
+  margin: 4px;
+}
+
+input {
+  border: 1px solid black;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2) inset;
+  outline: medium none;
+  font-size: inherit;
+  padding: inherit;
+}
+
+.estimate {
+  text-align: right;
+}
+
+.button {
+  border: 1px solid black;
+  padding: 6px;
+  font-size: 20px;
+  text-decoration: none;
+  color: white;
+  background-color: blue;
+  display: block;
+  text-align: center;
+}
