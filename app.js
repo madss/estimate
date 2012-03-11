@@ -31,36 +31,28 @@ $(function() {
   App.tasks = Em.ArrayProxy.create({
     content: [],
 
-    best: function() {
+    sum: function(property) {
       var sum = 0;
       this.forEach(function(task) {
-        sum += task.get('best');
+        sum += task.get(property);
       });
       return sum;
+    }
+
+    best: function() {
+      return this.sum('best');
     }.property('@each.best'),
 
     likely: function() {
-      var sum = 0;
-      this.forEach(function(task) {
-        sum += task.get('likely');
-      });
-      return sum;
+      return this.sum('likely');
     }.property('@each.likely'),
 
     worst: function() {
-      var sum = 0;
-      this.forEach(function(task) {
-        sum += task.get('worst');
-      });
-      return sum;
+      return this.sum('worst');
     }.property('@each.worst'),
 
     estimate: function() {
-      var sum = 0;
-      this.forEach(function(task) {
-        sum += task.get('estimate');
-      });
-      return sum;
+      return this.sum('estimate');
     }.property('@each.estimate'),
 
     deviation: function() {
