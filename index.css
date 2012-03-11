@@ -2,7 +2,7 @@ html, body {
   font-family: sans-serif;
 }
 
-#app {
+#content {
   font-size: 24px;
   padding: 6px;
 }
@@ -19,7 +19,7 @@ input {
   padding: inherit;
 }
 
-.estimate {
+.numeric {
   text-align: right;
 }
 

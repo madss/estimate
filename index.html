@@ -18,29 +18,29 @@
         </tr>
         <tr>
           <td><input id="description" placeholder="New Task" /></td>
-          <td><input id="best" value="1" size="5" /></td>
-          <td><input id="likely" value="2" size="5" /></td>
-          <td><input id="worst" value="3" size="5" /></td>
+          <td><input id="best" class="numeric" value="1" size="5" /></td>
+          <td><input id="likely" class="numeric" value="2" size="5" /></td>
+          <td><input id="worst" class="numeric" value="3" size="5" /></td>
           <td></td>
-          <td><a href="#" {{action "add"}}>Add</a></td>
+          <td><a class="button" href="#" {{action "add"}}>Add</a></td>
         </tr>
         {{#each App.tasks}}
           {{#view App.TaskView taskBinding="this"}}
             <td>{{task.description}}</td>
-            <td>{{task.best}}</td>
-            <td>{{task.likely}}</td>
-            <td>{{task.worst}}</td>
-            <td>{{fixed task.estimate}}</td>
-            <td><a href="#" {{action remove}}>Remove</a></td>
+            <td class="numeric">{{task.best}}</td>
+            <td class="numeric">{{task.likely}}</td>
+            <td class="numeric">{{task.worst}}</td>
+            <td class="numeric">{{fixed task.estimate}}</td>
+            <td><a class="button" href="#" {{action remove}}>Remove</a></td>
           {{/view}}
         {{/each}}
         {{#if App.tasks.length}}
           <tr>
             <td><strong>Total</strong></td>
-            <td>{{App.tasks.best}}</td>
-            <td>{{App.tasks.likely}}</td>
-            <td>{{App.tasks.worst}}</td>
-            <td>{{#bind App.tasks.estimate}}{{fixed this}}{{/bind}}</td>
+            <td class="numeric">{{App.tasks.best}}</td>
+            <td class="numeric">{{App.tasks.likely}}</td>
+            <td class="numeric">{{App.tasks.worst}}</td>
+            <td class="numeric">{{#bind App.tasks.estimate}}{{fixed this}}{{/bind}}</td>
             <td></td>
           </tr>
         {{/if}}
