@@ -7,6 +7,30 @@
     <script src="libs/ember-0.9.5.js"></script>
     <script src="app.js"></script>
     <script type="text/x-handlebars" data-template-name="main-view">
+      {{#view App.CreateTaskView}}
+        <tr>
+          <td>Description</td>
+          <td>{{view TextField id="description" placeholder="New Task" valueBinding="task.description"}}</td>
+        </tr>
+        <tr>
+          <td>Best case</td>
+          <td>{{view TextField valueBinding="task.best" size="5"}}</td>
+        </tr>
+        <tr>
+          <td>Likely</td>
+          <td>{{view TextField valueBinding="task.likely" size="5"}}</td>
+        </tr>
+        <tr>
+          <td>Worst case</td>
+          <td>{{view TextField valueBinding="task.worst" size="5"}}</td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <a class="button" href="#" {{action "add"}}>Add</a>
+          </td>
+        </tr>
+      {{/view}}
+      {{#if App.tasks.length}}
       <table>
         <tr>
           <td>Description</td>
@@ -15,14 +39,6 @@
           <td>Worst case</td>
           <td>Subestimate</td>
           <td></td>
-        </tr>
-        <tr>
-          <td><input id="description" placeholder="New Task" /></td>
-          <td><input id="best" class="numeric" value="1" size="5" /></td>
-          <td><input id="likely" class="numeric" value="2" size="5" /></td>
-          <td><input id="worst" class="numeric" value="3" size="5" /></td>
-          <td></td>
-          <td><a class="button" href="#" {{action "add"}}>Add</a></td>
         </tr>
         {{#each App.tasks}}
           {{#view App.TaskView taskBinding="this"}}
@@ -45,7 +61,6 @@
           </tr>
         {{/if}}
       </table>
-      {{#if App.tasks.length}}
       <table>
         {{#each App.estimates}}
           <tr>

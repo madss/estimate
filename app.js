@@ -37,7 +37,7 @@ $(function() {
         sum += task.get(property);
       });
       return sum;
-    }
+    },
 
     best: function() {
       return this.sum('best');
@@ -79,6 +79,9 @@ $(function() {
     }.property('factor', 'App.tasks.estimate', 'App.tasks.deviation')
   });
 
+  // -------------------------------------------------------------------
+  // Estimate collection
+  // -------------------------------------------------------------------
   App.estimates = Em.ArrayProxy.create({
     content: [
       App.Estimate.create({
@@ -109,19 +112,47 @@ $(function() {
   // -------------------------------------------------------------------
   App.MainView = Em.View.extend({
     templateName: "main-view",
+  });
+  App.MainView.create().appendTo("#content");
 
-    add: function(event) {
-      //if (event.keyCode != 13) return;
+  // -------------------------------------------------------------------
+  // Create Task View
+  // -------------------------------------------------------------------
+  App.CreateTaskView = Em.View.extend({
+    tagName: "table",
+    task: Em.Object.create({
+      description: '',
+      best:   1,
+      likely: 2,
+      worst:  3
+    }),
+
+    add: function() {
       var task = App.Task.create({
-        description: $('#description').val(),
-        best: parseFloat($('#best').val()),
-        likely: parseFloat($('#likely').val()),
-        worst: parseFloat($('#worst').val())
+        description: this.task.get('description'),
+        best: parseFloat(this.task.get('best')),
+        likely: parseFloat(this.task.get('likely')),
+        worst: parseFloat(this.task.get('worst'))
       });
-      App.tasks.pushObject(task);
-    }
+      if (task.description != '' && task.best && task.likely && task.worst) {
+        App.tasks.pushObject(task);
+        this.task.set('description', '');
+        $('#description').focus();
+      }
+    },
+
+    TextField: Em.TextField.extend(Em.TargetActionSupport, {
+      target: 'parentView',
+      action: 'add',
+      insertNewline: function() {
+        this.triggerAction();
+      }
+    }),
   });
 
+  // -------------------------------------------------------------------
+  // Task View
+  // -------------------------------------------------------------------
   App.TaskView = Em.View.extend({
     tagName: 'tr',
 
@@ -129,8 +160,6 @@ $(function() {
       App.tasks.removeObject(this.get("task"));
     }
   });
-
-  App.MainView.create().appendTo("#content");
 
   // -------------------------------------------------------------------
   // View helpers
