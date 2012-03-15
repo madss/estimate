@@ -147,7 +147,7 @@ $(function() {
       insertNewline: function() {
         this.triggerAction();
       }
-    }),
+    })
   });
 
   // -------------------------------------------------------------------
@@ -155,10 +155,48 @@ $(function() {
   // -------------------------------------------------------------------
   App.TaskView = Em.View.extend({
     tagName: 'tr',
+    editing: false,
+
+    edit: function() {
+      this.set('editing', true);
+      this.updatedTask = Em.Object.create({
+        description: this.task.get('description'),
+        best:   this.task.get('best'),
+        likely: this.task.get('likely'),
+        worst:  this.task.get('worst')
+      });
+    },
+
+    update: function() {
+      this.set('editing', false);
+      var description = this.updatedTask.get('description');
+      var best   = parseFloat(this.updatedTask.get('best'));
+      var likely = parseFloat(this.updatedTask.get('likely'));
+      var worst  = parseFloat(this.updatedTask.get('worst'));
+      if (description != '' && best && likely && worst) {
+        this.task.set('description', description);
+        this.task.set('best',   best);
+        this.task.set('likely', likely);
+        this.task.set('worst',  worst);
+        this.set('editing', false);
+      }
+    },
+
+    cancel: function() {
+      this.set('editing', false);
+    },
 
     remove: function() {
       App.tasks.removeObject(this.get("task"));
-    }
+    },
+
+    TextField: Em.TextField.extend(Em.TargetActionSupport, {
+      target: 'parentView',
+      action: 'update',
+      insertNewline: function() {
+        this.triggerAction();
+      }
+    })
   });
 
   // -------------------------------------------------------------------

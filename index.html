@@ -42,12 +42,45 @@
         </tr>
         {{#each App.tasks}}
           {{#view App.TaskView taskBinding="this"}}
-            <td>{{task.description}}</td>
-            <td class="numeric">{{task.best}}</td>
-            <td class="numeric">{{task.likely}}</td>
-            <td class="numeric">{{task.worst}}</td>
-            <td class="numeric">{{fixed task.estimate}}</td>
-            <td><a class="button" href="#" {{action remove}}>Remove</a></td>
+            <td>
+              {{#if editing}}
+                {{view TextField valueBinding="updatedTask.description"}}
+              {{else}}
+                <span {{action "edit"}}>{{task.description}}</span>
+              {{/if}}
+            </td>
+            <td class="numeric">
+              {{#if editing}}
+                {{view TextField valueBinding="updatedTask.best"}}
+              {{else}}
+                <span {{action "edit"}}>{{task.best}}</span>
+              {{/if}}
+            </td>
+            <td class="numeric">
+              {{#if editing}}
+                {{view TextField valueBinding="updatedTask.likely"}}
+              {{else}}
+                <span {{action "edit"}}>{{task.likely}}</span>
+              {{/if}}
+            <td class="numeric">
+              {{#if editing}}
+                {{view TextField valueBinding="updatedTask.worst"}}
+              {{else}}
+                <span {{action "edit"}}>{{task.worst}}</span>
+              {{/if}}
+            <td class="numeric">
+              {{#unless editing}}
+                {{fixed task.estimate}}
+              {{/unless}}
+            </td>
+            <td>
+              {{#if editing}}
+                <a class="button" href="#" {{action update}}>Update</a>
+                <a class="button" href="#" {{action cancel}}>Cancel</a>
+              {{else}}
+                <a class="button" href="#" {{action remove}}>Remove</a>
+              {{/if}}
+            </td>
           {{/view}}
         {{/each}}
         {{#if App.tasks.length}}
